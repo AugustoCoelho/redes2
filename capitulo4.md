@@ -81,41 +81,44 @@
     * Protocolo smtp: Permite enviar mensagens de um servidor origem para destino. Entre servidores.
 
   * SMTP (Simple Mail Transfer Protocol)
-    * TCP (porta 25)
-    * Transferência direta (Não passa por servidores intermediários)
-    * É a parte do **envio** do email:
-      * UA -> Servidor email remetente -> Servidor email destinatário
-    * SMTP é o protocolo para envio de emails, do agente usuário para o servidor de email do remetente, e deste último ao servidor de email do destinatário
-    * Três fases de transferências
-      1. Handshaking
-      2. Transferência de mensagens
-      3. Fechamento
-    * Interação comando/resposta
-      * Comandos: texto ASCII
-      * Resposta: código e frase de estado
-      * Mensagem em ASCII
-    * Se a mensagem não for enviada por um período (quando já está no servidor), serviço devolve a mensagem ao remetente
-    * Originalmente podíamos usar a porta 25, e os dados iam sem criptografia e sem autenticação
-    * Hoje usamos porta 587 (STARTTLS) ou 465 (SSL/TLS)
-      * SSL/TLS
-        * Criptografia entre dois hospedeiros
-        * TLS é o sucessor do SSL
-        * Conexão inicia com a negociação da criptografia antes de qualquer transferência
-      * STARTTLS
-        * Utiliza conexão criptografada (TLS ou SSL)
-        * Conexão inicial não criptografada e negocia STARTTLS
-    * SMTP AUTH: extensão do SMTP que o cliente deve se logar (uma vez que antes não tinha autenticação).
-    * Mensagem dividida em cabeçalho e corpo
-    * Conexão persistente
-    * Usa enter . enter pra determinar o fim da mensagem
-    * Comparação com HTTP
-      * HTTP
-        * Puxa. É o cliente que acessa o site e solicita a informação.
-        * Cada objeto encapsulado em sua própria mensagem de resposta. Só um corpo pra toda a resposta do servidor.
-      * SMTP
-        * Empurra. Manda email pra um destinatário sem o destinatário solicitar.
-        * Múltiplos objetos enviados na mensagem multiparte.
-      * Ambos em ASCII, códigos de estado (até a versão 1.1. codificação da v2 pode ser binária).
+
+### SMTP
+
+* TCP (porta 25)
+* Transferência direta (Não passa por servidores intermediários)
+* É a parte do **envio** do email:
+  * UA -> Servidor email remetente -> Servidor email destinatário
+* SMTP é o protocolo para envio de emails, do agente usuário para o servidor de email do remetente, e deste último ao servidor de email do destinatário
+* Três fases de transferências
+  1. Handshaking
+  2. Transferência de mensagens
+  3. Fechamento
+* Interação comando/resposta
+  * Comandos: texto ASCII
+  * Resposta: código e frase de estado
+  * Mensagem em ASCII
+* Se a mensagem não for enviada por um período (quando já está no servidor), serviço devolve a mensagem ao remetente
+* Originalmente podíamos usar a porta 25, e os dados iam sem criptografia e sem autenticação
+* Hoje usamos porta 587 (STARTTLS) ou 465 (SSL/TLS)
+  * SSL/TLS
+    * Criptografia entre dois hospedeiros
+    * TLS é o sucessor do SSL
+    * Conexão inicia com a negociação da criptografia antes de qualquer transferência
+  * STARTTLS
+    * Utiliza conexão criptografada (TLS ou SSL)
+    * Conexão inicial não criptografada e negocia STARTTLS
+* SMTP AUTH: extensão do SMTP que o cliente deve se logar (uma vez que antes não tinha autenticação).
+* Mensagem dividida em cabeçalho e corpo
+* Conexão persistente
+* Usa enter . enter pra determinar o fim da mensagem
+* Comparação com HTTP
+  * HTTP
+    * Puxa. É o cliente que acessa o site e solicita a informação.
+    * Cada objeto encapsulado em sua própria mensagem de resposta. Só um corpo pra toda a resposta do servidor.
+  * SMTP
+    * Empurra. Manda email pra um destinatário sem o destinatário solicitar.
+    * Múltiplos objetos enviados na mensagem multiparte.
+  * Ambos em ASCII, códigos de estado (até a versão 1.1. codificação da v2 pode ser binária).
 
 ## Videoaula 16: SMTP - POP3, IMAP e WebMail
 
