@@ -1,5 +1,102 @@
 # Capítulo 4. Camada de Aplicação
 
+## Aula 12: Telnet
+
+* Cliente servidor na camada de aplicação
+* Permite acesso remoto via um terminal remoto em qualquer parte da internet
+* Telnet [RFC 854] não possui criptografia
+* Conexão TCP entre cliente e servidor (porta 23)
+* Conectado, máquina do cliente emula terminal da máquina remota
+* Baseados em três ideias principais:
+  * Conceito de Terminal Virtual de Rede (NVT)
+  * Princípio de Negociação de Opções
+  * Tratamento Equivalente de Terminais e Processos
+* **É um serviço inseguro**
+* SSH é uma alternativa segura
+* Atualmente usado para testes simples
+  * Estabelece conexões TCPs genéricas
+  * Envia o que voce teclar para o socket TCP
+  * Imprime o que chega do socket TCP
+  * Util para testar servidores TCP e usam protocolos baseados em ASCII
+
+### Conceito de Terminal Virtual de Rede (NVT)
+
+* É um dispositivo lógico que fornece representação padronizada de um terminal
+* Elimina a necessidade das máquinas conhecerem as características do terminal usado por
+seus parceiros
+* Servidor e clientes mapeiam as características e convenções de seus terminais locais nas características do NVT
+
+### Princípio de Negociação de Opções
+
+* Permite que cliente e servidor negociem as opções que definem o comportamento do NVT
+  * Ex: formato de representação de caractere, modo de operação (half ou full-duplex)
+
+### Tratamento Equivalente de Terminais e Processos
+
+* Protocolo TELNET trata os terminais e o processo remoto de forma equivalente e simétrica
+* O cliente não precisa ser necessariamente um terminal, pode ser um processo de aplicação qualquer
+
+## Videoaula 13: FTP
+
+* Permite transferir, renomear ou remover arquivos e diretórios remotos
+* Modelo cliente servidor
+* Conexão de controle (porta 21) aberta pelo cliente
+* Conexão de dados (porta 20), **aberta pelo servidor (no modo ativo) ou o cliente (no modo passivo)** abre uma segunda conexão TCP para transferir dados. Conexão é fechada após transmissão de um arquivo
+  * As duas conexões são TCP
+* Mantém o estado de diretório atual, autenticação anterior
+* Há duas formas de se conectar: forma autenticada (usuário e senha) e forma anônima (anonymous e email).
+* **No modo ativo firewalls bloqueiam** pedidos de conexão vinda de fora da rede local
+  * Cliente: Abre canal de comandos/controle
+  * Cliente: Envia comando PORT indicando porta
+  * Servidor: cria conexão de dados (bloqueada por firewall)
+
+### Modo ativo
+
+1. Cliente: Inicia conexão de controle com servidor
+2. Servidor: Cumprimenta cliente
+3. Cliente: Faz o login (anônimo), senha passa sem criptografia
+4. Cliente: Abre conexão de dados via comando PORT (informa que quer receber conexão de dados no endereço IP X e na porta y*256+z)
+5. Servidor: Solicita conexão com IP e porta informado
+6. Há conexões TCP, comandos e transferência de dados
+
+### Modo passivo
+
+* Cliente abre o canal de comandos da porta cliente
+* Cliente envia o comando PASV para o servidor através do canal de comandos
+  * O comando muda a transmissão para modo passivo
+  * Servidor responde através do canal de comandos a porta que irá escutar para o canal de dados
+* Cliente abre o canal de dados para a porta de dados do servidor
+
+### Desvantagens do FTP
+
+* Senhas e conteúdo de arquivos trafegam na rede não criptografados
+* No modo ativo, a negociação da porta de dados entre cliente e servidor dificulta a configuração do firewall
+  * No modo ativo é possível dizer ao servidor para estabelecer a conexão de dados com um terceiro host, indicando IP e porta
+
+### Autenticação do FTP
+
+* É preciso ter uma conta no host onde o servidor está rodando
+* Servidores FTP possuem usuário padrão anonymous pra não precisar de conta
+  * Esses usuários anonymous não tem senha, normalmente pede email mas não checa.
+
+### FTP Seguro
+
+#### FTPS
+
+Uma extensão do FTP que adiciona suporte ao TLS (Transport Layer Security), e anteriormente SSL (proibido pela RFC7568)
+
+* Permite certificação do servidor e criptografia dos dados
+* Modo implícito: usa conexão segura desde o início.
+* Modo explícito: conexão inicia aberta e cliente pede explicitamente segurança.
+
+#### SFTP (SSH FTP)
+
+* Não é o protocolo FTP seguro
+* Fornece acesso, transferência e gerenciamento de arquivos sobre um canal confiável
+* Protocolo binário e usa apenas uma conexão (não separa conexão de comando e de dados)
+* Tecnologicamente superior ao FTPS
+
+
 ## Videoaula 14: NFS (Network File System)
 
 * NFS é um sistema que permite a montagem de sistemas de arquivos remotos através de uma rede TCP-IP
