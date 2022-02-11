@@ -97,12 +97,6 @@ socket apropriado
 
 - HTTP não persistente terá um socket diferente para cada requisição
 
-> Diferença entre demultiplexação orientada e não orientada a conexão?
-
-> É a criação do socket de conexão?
-
-> Na demultiplexão não orientada a conexão hospedeiro servidor só usa um socket TCP, enquanto na orientada pode usar vários?
-
 ### Diferença entre as duas
 
 - Não há muita diferença 
