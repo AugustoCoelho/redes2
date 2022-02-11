@@ -4,8 +4,6 @@ Anotações da disciplina INE5422-05208 (20212) - Redes de Computadores II
 
 ## Indice
 
-- [Capítulos 1 e 2](capitulo1-2.md)
-
 - [Capítulo 4](capitulo4.md)
 
 - Capitulo 5
